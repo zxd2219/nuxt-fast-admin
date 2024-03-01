@@ -1,0 +1,26 @@
+{
+  "name": "@ucstu/nuxt-fast-admin-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nuxt",
+    "fast",
+    "admin"
+  ],
+  "author": "UCSTU",
+  "license": "MIT",
+  "pnpm": {
+    "patchedDependencies": {
+      "@fast-crud/fast-crud@1.20.1": "patches/@fast-crud__fast-crud@1.20.1.patch",
+      "@fast-crud/fast-extends@1.20.1": "patches/@fast-crud__fast-extends@1.20.1.patch",
+      "@fast-crud/ui-antdv@1.20.1": "patches/@fast-crud__ui-antdv@1.20.1.patch",
+      "@fast-crud/ui-antdv4@1.20.1": "patches/@fast-crud__ui-antdv4@1.20.1.patch",
+      "@fast-crud/ui-element@1.20.1": "patches/@fast-crud__ui-element@1.20.1.patch",
+      "@fast-crud/ui-interface@1.20.1": "patches/@fast-crud__ui-interface@1.20.1.patch",
+      "@fast-crud/ui-naive@1.20.1": "patches/@fast-crud__ui-naive@1.20.1.patch"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+diff --git a/.eslintrc.js b/.eslintrc.js
+deleted file mode 100644
+index 37ed1f28201684d15f23e8b8689fc30a78f619f1..0000000000000000000000000000000000000000
+diff --git a/.prettierrc b/.prettierrc
+deleted file mode 100644
+index a4643ee91d31c77ecb19b80c799771e5a3d8f3b5..0000000000000000000000000000000000000000
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index d7bb389376180462ad803a6203b38c8adedc5f6b..0000000000000000000000000000000000000000
+diff --git a/build.md b/build.md
+deleted file mode 100644
+index f04c52494ff7d263f571fbcc7295f1a09d14c5ab..0000000000000000000000000000000000000000
+diff --git a/index.d.ts b/index.d.ts
+deleted file mode 100644
+index e910bb060c38d6f1e446ef4cb673c85186a229e1..0000000000000000000000000000000000000000
+diff --git a/index.js b/index.js
+deleted file mode 100644
+index d7900e11dfff9acca7d3bfc19a8cfa4408833e19..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index 1d417ebae4bb1e2e9b9f62dbdefc20cc94b2fbf7..a7a8b6a7791bde057dd131180ff0e069450e68a7 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,17 @@
+   "main": "./dist/ui-interface.umd.js",
+   "module": "./dist/ui-interface.mjs",
+   "types": "./dist/d/index.d.ts",
++  "exports": {
++    ".": {
++      "types": "./dist/d/index.d.ts",
++      "import": "./dist/ui-interface.mjs",
++      "require": "./dist/ui-interface.umd.js"
++    },
++    "./dist/*": "./dist/*"
++  },
++  "files": [
++    "dist"
++  ],
+   "scripts": {
+     "tsc": "vue-tsc --noEmit --skipLibCheck",
+     "build": "npm run tsc && vite build",
+diff --git a/stats.html b/stats.html
+deleted file mode 100644
+index 0fd8bf5e1828a1a657b407164c0a086e3aeb212d..0000000000000000000000000000000000000000
+diff --git a/tsconfig.json b/tsconfig.json
+deleted file mode 100644
+index 878298306a9e11fb0e7d190857024cdcc935e037..0000000000000000000000000000000000000000
+diff --git a/vite.config.js b/vite.config.js
+deleted file mode 100644
+index 229383bee9da590faae05218981ac7a184ed6490..0000000000000000000000000000000000000000

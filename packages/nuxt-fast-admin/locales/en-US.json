@@ -1,0 +1,85 @@
+{
+  "$schema": "../.playground/.nuxt/schema/fa-locales.schema.json",
+  "menus": {
+    "$root": { "title": "Menus", "description": "Menus" }
+  },
+  "pages": {
+    "auth": {
+      "title": "Auth",
+      "description": "Login/Register",
+      "username": "Username",
+      "password": "Password",
+      "remember": "Remember me",
+      "forget": "Forget {0}",
+      "signin": "Sign In",
+      "signup": "Sign Up"
+    }
+  },
+  "fa": {
+    "common": {
+      "input": "Enter {0}",
+      "select": "Select {0}",
+      "upload": "Upload {0}",
+      "repeat": "Repeat {0}",
+      "submit": "Submit {0}",
+      "confirm": "Confirm {0}",
+      "cancel": "Cancel {0}",
+      "reset": "Reset {0}",
+      "close": "Close {0}",
+
+      "insert": "Insert {0}",
+      "delete": "Delete {0}",
+      "modify": "Modify {0}",
+      "search": "Search {0}",
+      "filter": "Filter {0}",
+      "refresh": "Refresh {0}",
+      "preview": "Preview {0}",
+
+      "save": "Save {0}",
+
+      "to": "To {0}",
+      "your": "Your {0}",
+      "show": "Show {0}",
+      "hide": "Hide {0}"
+    },
+    "error": {
+      "list": {
+        "401": {
+          "title": "Unauthorized",
+          "description": "You did not authenticate (login)"
+        },
+        "403": {
+          "title": "Forbidden",
+          "description": "You don't have permission to view the page/take action"
+        },
+        "404": {
+          "title": "Resource does not exist",
+          "description": "The visited page does not exist/the request is abnormal"
+        },
+        "418": {
+          "title": "I'm a teapot",
+          "description": "I'm a teapot"
+        },
+        "500": {
+          "title": "server error",
+          "description": "An error occurred inside the server"
+        },
+        "connection": {
+          "title": "Connection error",
+          "description": "Failed to connect to the server"
+        },
+        "unknown": {
+          "title": "Unknown error",
+          "description": "Unknown error"
+        }
+      },
+      "action": {
+        "auth": "Go Auth",
+        "home": "Go Home",
+        "back": "Go Back",
+        "know": "I know",
+        "stack": "Stack"
+      }
+    }
+  }
+}

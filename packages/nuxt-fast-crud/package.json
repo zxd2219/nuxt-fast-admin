@@ -1,0 +1,69 @@
+{
+  "name": "@ucstu/nuxt-fast-crud",
+  "version": "1.0.0",
+  "description": "Nuxt Fast CRUD module",
+  "repository": "ucstu/nuxt-fast-crud",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/module.mjs",
+      "require": "./dist/module.cjs"
+    }
+  },
+  "main": "./dist/module.cjs",
+  "types": "./dist/types.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "dev": "nuxi dev playground",
+    "dev:build": "nuxi build playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare && nuxi prepare playground",
+    "release": "npm run lint && npm run test && npm run prepack && changelogen --release && npm publish && git push --follow-tags",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest watch"
+  },
+  "dependencies": {
+    "@fast-crud/fast-crud": "^1.20.0",
+    "@fast-crud/fast-extends": "^1.20.0",
+    "@fast-crud/ui-antdv": "^1.20.0",
+    "@fast-crud/ui-antdv4": "^1.20.0",
+    "@fast-crud/ui-element": "^1.20.0",
+    "@fast-crud/ui-interface": "^1.20.0",
+    "@fast-crud/ui-naive": "^1.20.0",
+    "@nuxt/kit": "^3.10.3",
+    "type-fest": "^4.10.3"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "^1.0.8",
+    "@nuxt/eslint-config": "^0.2.0",
+    "@nuxt/module-builder": "^0.5.5",
+    "@nuxt/schema": "^3.10.3",
+    "@nuxt/test-utils": "^3.11.0",
+    "@types/node": "^20.11.20",
+    "changelogen": "^0.5.5",
+    "eslint": "^8.57.0",
+    "nuxt": "^3.10.3",
+    "vitest": "^1.3.1"
+  },
+  "peerDependencies": {
+    "ant-design-vue": "*",
+    "element-plus": "*",
+    "naive-ui": "*"
+  },
+  "peerDependenciesMeta": {
+    "element-plus": {
+      "optional": true
+    },
+    "ant-design-vue": {
+      "optional": true
+    },
+    "naive-ui": {
+      "optional": true
+    }
+  }
+}

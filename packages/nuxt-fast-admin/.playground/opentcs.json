@@ -1,0 +1,4567 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OPENTCS",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "运输订单"
+    },
+    {
+      "name": "Order Sequences"
+    },
+    {
+      "name": "Vehicles"
+    },
+    {
+      "name": "Peripheral jobs"
+    },
+    {
+      "name": "Peripherals"
+    },
+    {
+      "name": "Plant models"
+    },
+    {
+      "name": "Status"
+    }
+  ],
+  "paths": {
+    "/transportOrders": {
+      "get": {
+        "summary": "检索一组运输订单。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["运输订单"],
+        "parameters": [
+          {
+            "name": "intendedVehicle",
+            "in": "query",
+            "description": "用于处理要检索的运输订单的车辆的名称。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "运输订单数组。",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransportOrderState"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "有关实际错误的详细信息。",
+                    "examples": [
+                      "Could not find the intended vehicle 'Vehicle-0001'."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/orderSequences": {
+      "get": {
+        "summary": "检索一组顺序序列。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Order Sequences"],
+        "parameters": [
+          {
+            "name": "intendedVehicle",
+            "in": "query",
+            "description": "用于处理要检索的订单序列的车辆的名称。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "订单序列的排列",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderSequenceState"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Could not find the intended vehicle 'Vehicle-0001'."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles": {
+      "get": {
+        "summary": "检索一组车辆。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "procState",
+            "in": "query",
+            "description": "要检索的车辆的处理状态。",
+            "required": false,
+            "example": "IDLE",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "车辆排列",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/VehicleState"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的数据无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not parse input."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripheralJobs": {
+      "get": {
+        "summary": "检索一组外围作业。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Peripheral jobs"],
+        "parameters": [
+          {
+            "name": "relatedVehicle",
+            "in": "query",
+            "description": "为其创建要检索的外围作业的车辆的名称。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "relatedTransportOrder",
+            "in": "query",
+            "description": "为其创建要检索的外围作业的传输订单的名称。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "外围作业的排列",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PeripheralJobState"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Could not find the related vehicle 'Vehicle-0001'."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripherals/{NAME}/commAdapter/attachmentInformation": {
+      "get": {
+        "summary": "检索此外围设备的驱动程序附件信息。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Peripherals"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "外围设备/位置的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeripheralAttachmentInformation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find location 'Fire door 002'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/plantModel": {
+      "get": {
+        "summary": "检索当前加载的工厂模型。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Plant models"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlantModel"
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "put": {
+        "summary": "上传带有给定信息的新工厂模型。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Plant models"],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlantModel"
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的工厂模型无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not parse JSON input."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/events": {
+      "get": {
+        "summary": "检索事件列表。",
+        "deprecated": false,
+        "description": "此操作使用*长轮询*来避免服务器上的过度负载：将*超时*参数设置为一个值，该值指示如果当前没有任何事件要返回，则操作可能等待的时间。",
+        "tags": ["Status"],
+        "parameters": [
+          {
+            "name": "minSequenceNo",
+            "in": "query",
+            "description": "要检索的事件的最小序列号。可以/应该用于筛选出已经检索到的事件。（将其设置为已看到的最大序列号，增量为1.",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "maxSequenceNo",
+            "in": "query",
+            "description": "The maximum sequence number of events to be retrieved. Can/Should be used to limit the number of events retrieved. (Set this to e.g. *minSequenceNo* + 100.)",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "timeout",
+            "in": "query",
+            "description": "如果当前没有任何要返回的事件，则等待事件到达的时间（以毫秒为单位）。不能大于10000。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatusMessageList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "无效的参数值。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Parameter 'timeout' is not in the correct range."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/transportOrders/{NAME}": {
+      "get": {
+        "summary": "检索单个命名的运输订单",
+        "deprecated": false,
+        "description": "",
+        "tags": ["运输订单"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要检索的运输订单的名称",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportOrderState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find transport order 'TOrder-01'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "使用给定的名称创建新的运输订单。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["运输订单"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要创建的运输订单的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransportOrder"
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransportOrderState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的数据无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not parse JSON input."]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find location 'Storage 01'."]
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "模型中已存在具有相同名称的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Transport order 'TOrder-01' already exists."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/orderSequences/{NAME}": {
+      "get": {
+        "summary": "检索单个命名的顺序序列。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Order Sequences"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要检索的订单序列的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderSequenceState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Could not find order sequence 'Sequence-002'."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "使用给定的名称创建新的订单序列。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Order Sequences"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要创建的订单序列的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderSequence"
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderSequenceState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的数据无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not parse JSON input."]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find Vehicle 'Vehicle-002'."]
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "模型中已存在具有相同名称的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Order sequence 'Sequence-002' already exists."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}": {
+      "get": {
+        "summary": "检索具有给定名称的车辆。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要检索的车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VehicleState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripheralJobs/{NAME}": {
+      "get": {
+        "summary": "检索单个命名的外围作业。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Peripheral jobs"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要检索的外围作业的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeripheralJobState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find peripheral job 'PJob-01'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      },
+      "post": {
+        "summary": "使用给定的名称创建一个新的外围作业。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Peripheral jobs"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要创建的外围作业的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PeripheralJob"
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PeripheralJobState"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的数据无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not parse JSON input."]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Could not find related vehicle 'Vehicle-0001'."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "模型中已存在具有相同名称的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Peripheral job 'PJob-01' already exists."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripherals/{NAME}/commAdapter/attachment": {
+      "put": {
+        "summary": "将给定的外围设备驱动程序连接到此外围设备。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Peripherals"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "外围设备/位置的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "要附加的外围驱动程序的描述类名。",
+            "required": true,
+            "example": "org.opentcs.somePeripheral.driver001",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的值无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Unknown peripheral driver class name: org.opentcs.somePeripheral.driver0011"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find location 'Fire door 003'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/withdrawal": {
+      "post": {
+        "summary": "撤销由具有给定名称的车辆处理的运输订单。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "处理要撤销的运输订单的车辆名称",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "immediate",
+            "in": "query",
+            "description": "是否应尽快中止运输订单。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "disableVehicle",
+            "in": "query",
+            "description": "不推荐，而是明确设置车辆的集成级别。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripherals/{NAME}/commAdapter/enabled": {
+      "put": {
+        "summary": "设置命名外围设备的驱动程序的启用状态。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Peripherals"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "外围设备/位置的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "外围设备驱动程序的新启用状态。",
+            "required": true,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find location 'Fire door 003'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/paths/{NAME}/locked": {
+      "put": {
+        "summary": "设置命名路径的锁定状态。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Plant models"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "路径的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "路径的新锁定状态。",
+            "required": true,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Could not find path 'Point-0001 --- Point-0002'."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/transportOrders/{NAME}/immediateAssignment": {
+      "post": {
+        "summary": "立即将运输订单分配给其预定车辆。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["运输订单"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要分配的运输订单的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "引用状态无效的运输订单。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Could not assign transport order 'TOrder-01' to vehicle 'Vehicle-0001'."
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find transport order 'TOrder-01'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/orderSequences/{NAME}/complete": {
+      "put": {
+        "summary": "设置命名订单序列的完整标志。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Order Sequences"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "订单序列的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Could not find order sequence 'Sequence-002'."
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/rerouteRequest": {
+      "post": {
+        "summary": "重新安排具有给定名称的车辆的路线。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要更改路线的车辆的名称",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "forced",
+            "in": "query",
+            "description": "车辆是否应该改道，即使它不在预期的位置。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripheralJobs/{NAME}/withdrawal": {
+      "post": {
+        "summary": "撤回具有给定名称的外围作业。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Peripheral jobs"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要撤回的外围作业的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find peripheral job 'PJob-01'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripherals/{NAME}/withdrawal": {
+      "post": {
+        "summary": "撤回分配给给定外设的外设作业。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Peripherals"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "外围设备/位置的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find location 'Fire door 003'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/locations/{NAME}/locked": {
+      "put": {
+        "summary": "设置命名位置的锁定状态。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Plant models"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "位置的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "该位置的新锁定状态。",
+            "required": true,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find location 'Storage 01'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/transportOrders/{NAME}/withdrawal": {
+      "post": {
+        "summary": "撤回具有给定名称的运输订单。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["运输订单"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要撤销的运输订单的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "immediate",
+            "in": "query",
+            "description": "是否应尽快中止运输订单。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "disableVehicle",
+            "in": "query",
+            "description": "不推荐，而是明确设置车辆的集成级别。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find transport order 'TOrder-01'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/integrationLevel": {
+      "put": {
+        "summary": "为命名车辆设置新的集成级别。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "车辆的新集成级别。",
+            "required": true,
+            "example": "TO_BE_RESPECTED",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripheralJobs/dispatcher/trigger": {
+      "post": {
+        "summary": "显式触发外围作业的调度。",
+        "deprecated": false,
+        "description": "触发内核的调度器将外围作业分配给外围设备。这通常是自动发生的，但根据内核配置，可能需要显式触发它。",
+        "tags": ["Peripheral jobs"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/peripherals/dispatcher/trigger": {
+      "post": {
+        "summary": "显式触发外围作业/设备的调度。",
+        "deprecated": false,
+        "description": "触发内核的调度器将外围作业分配给外围设备。这通常是自动发生的，但根据内核配置，可能需要显式触发它。",
+        "tags": ["Peripherals"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/message": {
+      "post": {
+        "summary": "向命名的车辆发布新消息。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                      "action": {
+                        "type": "string",
+                        "description": "操作",
+                        "enum": [
+                          "navigate",
+                          "pause",
+                          "resume",
+                          "cancel",
+                          "load",
+                          "unload",
+                          "lock",
+                          "unlock",
+                          "reloc",
+                          "comfirmloc",
+                          "motion"
+                        ]
+                      }
+                    },
+                    "required": ["action"]
+                  },
+                  {
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "point": {
+                            "type": "string",
+                            "description": "点位"
+                          },
+                          "operation": {
+                            "type": "string",
+                            "description": "操作",
+                            "enum": ["JackLoad", "JackUnload"]
+                          },
+                          "recognize": {
+                            "type": "boolean",
+                            "description": "识别"
+                          },
+                          "jackHeight": {
+                            "type": "number",
+                            "description": "顶升高度"
+                          }
+                        },
+                        "required": ["point"]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "vx": {
+                            "type": "number",
+                            "description": "十、轴速度"
+                          },
+                          "vy": {
+                            "type": "number",
+                            "description": "Y轴速度"
+                          },
+                          "w": {
+                            "type": "number",
+                            "description": "角速度"
+                          },
+                          "steer": {
+                            "type": "number",
+                            "description": "单舵轮机器人"
+                          },
+                          "real_steer": {
+                            "type": "number",
+                            "description": "目标舵角值"
+                          },
+                          "duration": {
+                            "type": "number",
+                            "description": "持续时间"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/transportOrders/{NAME}/intendedVehicle": {
+      "put": {
+        "summary": "更新运输订单的预定车辆。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["运输订单"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要更新的运输订单的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "vehicle",
+            "in": "query",
+            "description": "要将运输订单分配给的车辆的名称。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find transport order 'TOrder-01'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/paused": {
+      "put": {
+        "summary": "设置命名车辆的暂停状态。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "车辆的新暂停状态。",
+            "required": true,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/transportOrders/{NAME}/weight": {
+      "put": {
+        "summary": "更新运输订单的重量。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["运输订单"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "要更新的运输订单的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "weight",
+            "in": "query",
+            "description": "运输订单的重量。",
+            "required": false,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find transport order 'TOrder-01'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/transportOrders/dispatcher/trigger": {
+      "post": {
+        "summary": "明确触发车辆/运输订单的调度。",
+        "deprecated": false,
+        "description": "触发内核的调度器将车辆分配给运输订单。这通常是自动发生的，但根据内核配置，可能需要显式触发它。",
+        "tags": ["运输订单"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/allowedOrderTypes": {
+      "put": {
+        "summary": "为命名车辆设置允许的订单类型。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AllowedOrderTypes"
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的数据无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not parse JSON input."]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/dispatcher/trigger": {
+      "post": {
+        "summary": "明确触发车辆/运输订单的调度。",
+        "deprecated": true,
+        "description": "触发内核的调度器将车辆分配给运输订单。这通常是自动发生的，但根据内核配置，可能需要显式触发它。",
+        "tags": ["运输订单"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/commAdapter/attachmentInformation": {
+      "get": {
+        "summary": "检索此车辆的驾驶员附件信息。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AttachmentInformation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/commAdapter/attachment": {
+      "put": {
+        "summary": "将给定的车辆驾驶员连接到此车辆。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "要附加的车辆驾驶员的描述类名称。",
+            "required": true,
+            "example": "org.opentcs.virtualvehicle.LoopbackCommunicationAdapterDescription",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的值无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": [
+                      "Unknown vehicle driver class name: org.opentcs.someVehicle.driver11"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/commAdapter/enabled": {
+      "put": {
+        "summary": "设置命名车辆驾驶员的启用状态。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "车辆驾驶员的新启用状态。",
+            "required": true,
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/routeComputationQuery": {
+      "post": {
+        "summary": "计算命名车辆到指定目的地点的路线。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoutesRequest"
+              },
+              "example": ""
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoutesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "提交的请求正文无效。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not parse JSON input."]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Unknown source point: Point-X"]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/{NAME}/envelopeKey": {
+      "put": {
+        "summary": "设置此车辆的包络密钥。",
+        "deprecated": false,
+        "description": "",
+        "tags": ["Vehicles"],
+        "parameters": [
+          {
+            "name": "NAME",
+            "in": "path",
+            "description": "车辆的名称。",
+            "required": true,
+            "example": "",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "newValue",
+            "in": "query",
+            "description": "车辆的新信封钥匙。",
+            "required": false,
+            "example": "envelopeType-01",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "操作成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "正在引用找不到的对象。",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "description": "实际错误的详细信息。",
+                    "examples": ["Could not find vehicle 'Vehicle-0001'."]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    },
+    "/vehicles/dispatcher/trigger": {
+      "post": {
+        "summary": "明确触发车辆/运输订单的调度。",
+        "deprecated": false,
+        "description": "触发内核的调度器将车辆分配给运输订单。这通常是自动发生的，但根据内核配置，可能需要显式触发它。",
+        "tags": ["Vehicles"],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功响应",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RoutesResponse": {
+        "title": "不同目的地点的计算路线。",
+        "type": "object",
+        "properties": {
+          "routes": {
+            "type": "array",
+            "description": "计算路线的列表。",
+            "items": {
+              "$ref": "#/components/schemas/Route"
+            }
+          }
+        },
+        "examples": [
+          {
+            "routes": [
+              {
+                "destinationPoint": "Point-C",
+                "costs": 77644,
+                "steps": [
+                  {
+                    "path": "Point-A --- Point-B",
+                    "sourcePoint": "Point-A",
+                    "destinationPoint": "Point-B",
+                    "vehicleOrientation": "FORWARD"
+                  },
+                  {
+                    "path": "Point-B --- Point-C",
+                    "sourcePoint": "Point-B",
+                    "destinationPoint": "Point-C",
+                    "vehicleOrientation": "FORWARD"
+                  }
+                ]
+              },
+              {
+                "destinationPoint": "Point-D",
+                "costs": -1,
+                "steps": null
+              },
+              {
+                "destinationPoint": "Point-E",
+                "costs": 67934,
+                "steps": [
+                  {
+                    "path": "Point-A --- Point-D",
+                    "sourcePoint": "Point-A",
+                    "destinationPoint": "Point-D",
+                    "vehicleOrientation": "FORWARD"
+                  },
+                  {
+                    "path": "Point-D --- Point-E",
+                    "sourcePoint": "Point-D",
+                    "destinationPoint": "Point-E",
+                    "vehicleOrientation": "BACKWARD"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "RoutesRequest": {
+        "title": "请求的路线",
+        "type": "object",
+        "properties": {
+          "sourcePoint": {
+            "type": "string",
+            "description": "路线计算的（可选）起点。如果无效的或未设置，则将使用车辆的当前位置。",
+            "examples": ["Point-A"]
+          },
+          "destinationPoints": {
+            "type": "array",
+            "description": "要计算的每条路线的终点。",
+            "examples": [["Point-C", "Point-D", "Point-E"]],
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["destinationPoints"]
+      },
+      "Step": {
+        "title": "路线的单个步骤",
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "此步骤的行进路径。",
+            "examples": ["Point-A --- Point-B"]
+          },
+          "sourcePoint": {
+            "type": "string",
+            "description": "此步骤的源点。",
+            "examples": ["Point-A"]
+          },
+          "destinationPoint": {
+            "type": "string",
+            "description": "此步骤的目标点。",
+            "examples": ["Point-B"]
+          },
+          "vehicleOrientation": {
+            "type": "string",
+            "default": "UNDEFINED",
+            "enum": ["FORWARD", "BACKWARD", "UNDEFINED"]
+          }
+        },
+        "required": ["destinationPoint", "vehicleOrientation"]
+      },
+      "Route": {
+        "title": "路线",
+        "type": "object",
+        "properties": {
+          "destinationPoint": {
+            "type": "string",
+            "description": "计算出的路线的终点。",
+            "examples": ["Point-A"]
+          },
+          "costs": {
+            "type": "integer",
+            "format": "int64",
+            "description": "计算出的路线的成本，或1.如果无法计算出路线。",
+            "examples": [33475]
+          },
+          "steps": {
+            "type": "array",
+            "description": "一个数组，包含计算出的路由的步数，如果无法计算出路由，则为无效的",
+            "items": {
+              "$ref": "#/components/schemas/Step"
+            }
+          }
+        },
+        "required": ["destinationPoint", "costs", "steps"]
+      },
+      "PlantModelEnvelope": {
+        "title": "信封",
+        "type": "object",
+        "properties": {
+          "envelopeKey": {
+            "type": "string",
+            "description": "这个信封的钥匙。",
+            "examples": ["envelopeType-01"]
+          },
+          "vertices": {
+            "type": "array",
+            "description": "此封套包含的顶点序列。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelCouple"
+            },
+            "examples": [
+              [
+                {
+                  "x": 1500,
+                  "y": 1750
+                },
+                {
+                  "x": 1600,
+                  "y": 1820
+                },
+                {
+                  "x": 1700,
+                  "y": 1890
+                }
+              ]
+            ]
+          }
+        }
+      },
+      "PlantModelLayerGroup": {
+        "title": "图层组",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "此图层组的唯一身份证件",
+            "examples": [0]
+          },
+          "name": {
+            "type": "string",
+            "description": "此图层组的名称。",
+            "examples": ["some layer"]
+          },
+          "visible": {
+            "description": "此图层组是否可见。",
+            "type": "boolean"
+          }
+        },
+        "required": ["id", "name", "visible"]
+      },
+      "PlantModelLayer": {
+        "title": "层",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "此层的唯一身份证件",
+            "examples": [0]
+          },
+          "ordinal": {
+            "type": "integer",
+            "description": "该层的序号。序号较高的层位于序号较低的层之上。",
+            "examples": [0]
+          },
+          "visible": {
+            "type": "boolean",
+            "description": "此层是否可见。"
+          },
+          "name": {
+            "type": "string",
+            "description": "此层的名称。",
+            "examples": ["some layer"]
+          },
+          "groupId": {
+            "type": "integer",
+            "description": "将此图层指定给的图层组的身份证件",
+            "examples": [0]
+          }
+        },
+        "required": ["id", "ordinal", "visible", "name", "groupId"]
+      },
+      "PlantModelCouple": {
+        "title": "夫妇",
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "integer",
+            "format": "int64",
+            "description": "情侣的x值。",
+            "examples": [1500]
+          },
+          "y": {
+            "type": "integer",
+            "format": "int64",
+            "description": "情侣的y值。",
+            "examples": [2000]
+          }
+        },
+        "required": ["x", "y"]
+      },
+      "PlantModelTriple": {
+        "title": "三部分的",
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "integer",
+            "format": "int64",
+            "description": "三部分的的x值。",
+            "examples": [1500]
+          },
+          "y": {
+            "type": "integer",
+            "format": "int64",
+            "description": "三元组的y值。",
+            "examples": [2000]
+          },
+          "z": {
+            "type": "integer",
+            "format": "int64",
+            "description": "三部分的的z值。",
+            "examples": [500]
+          }
+        },
+        "required": ["x", "y", "z"]
+      },
+      "PlantModelVisualLayout": {
+        "title": "视觉布局",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "此视觉布局的名称。",
+            "examples": ["some visual layout"]
+          },
+          "scaleX": {
+            "type": "number",
+            "description": "此布局在十、轴上的比例（单位为毫米/像素）。",
+            "examples": [50]
+          },
+          "scaleY": {
+            "type": "number",
+            "description": "此布局在Y轴上的比例（单位为毫米/像素）。",
+            "examples": [50]
+          },
+          "layers": {
+            "type": "array",
+            "description": "此布局的层。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelLayer"
+            }
+          },
+          "layerGroups": {
+            "type": "array",
+            "description": "布局的图层组。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelLayerGroup"
+            }
+          },
+          "properties": {
+            "type": "array",
+            "description": "此视觉布局的属性。",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["name"]
+      },
+      "PlantModelVehicle": {
+        "title": "交通工具",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "这辆车的名字。",
+            "examples": ["some vehicle"]
+          },
+          "length": {
+            "type": "integer",
+            "description": "车辆的长度（单位：mm）",
+            "examples": [1000]
+          },
+          "energyLevelCritical": {
+            "type": "integer",
+            "description": "应为车辆充电的能量水平值（%）。",
+            "examples": [15]
+          },
+          "energyLevelGood": {
+            "type": "integer",
+            "description": "充电时可再次调度车辆的能量水平值（%）。",
+            "examples": [60]
+          },
+          "energyLevelFullyRecharged": {
+            "type": "integer",
+            "description": "车辆被视为完全充电的能量水平值（%）。",
+            "examples": [90]
+          },
+          "energyLevelSufficientlyRecharged": {
+            "type": "integer",
+            "description": "当车辆处于/高于该值时，认为车辆已充分充电的能量水平值（%）。",
+            "examples": [50]
+          },
+          "maxVelocity": {
+            "type": "integer",
+            "description": "车辆的最大速度（mm/s）",
+            "examples": [2000]
+          },
+          "maxReverseVelocity": {
+            "type": "integer",
+            "description": "车辆的最大反向速度（mm/s）",
+            "examples": [733]
+          },
+          "layout": {
+            "type": "object",
+            "description": "有关此车辆的图形表示的信息。",
+            "properties": {
+              "routeColor": {
+                "type": "string",
+                "pattern": "^#([A-Fa-f0-9]{6})$",
+                "examples": ["#00FF00"]
+              }
+            }
+          },
+          "properties": {
+            "type": "array",
+            "description": "此车辆的属性。",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            }
+          }
+        },
+        "required": ["name"]
+      },
+      "PlantModelBlock": {
+        "title": "块",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "这个区块的名称。",
+            "examples": ["some block"]
+          },
+          "type": {
+            "type": "string",
+            "description": "这个块的类型。",
+            "enum": ["SINGLE_VEHICLE_ONLY", "SAME_DIRECTION_ONLY"]
+          },
+          "memberNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "此块的成员名称。",
+            "examples": [["Path-AB", "Path-BC"]]
+          },
+          "layout": {
+            "type": "object",
+            "description": "有关此块的图形表示的信息。",
+            "properties": {
+              "color": {
+                "type": "string",
+                "pattern": "^#([A-Fa-f0-9]{6})$",
+                "examples": ["#FF0000"]
+              }
+            }
+          },
+          "properties": {
+            "type": "array",
+            "description": "此块的属性。",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            }
+          }
+        },
+        "required": ["name"]
+      },
+      "PlantModelLocation": {
+        "title": "位置",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "此位置的名称。",
+            "examples": ["some location"]
+          },
+          "typeName": {
+            "type": "string",
+            "description": "此位置的类型的名称。",
+            "examples": ["some location type"]
+          },
+          "position": {
+            "$ref": "#/components/schemas/PlantModelTriple"
+          },
+          "links": {
+            "type": "array",
+            "description": "连接指向此位置的链接。这是允许操作的点名称映射。",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pointName": {
+                  "type": "string",
+                  "examples": ["some point"]
+                },
+                "allowedOperations": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "examples": ["some operation"]
+                  }
+                }
+              }
+            }
+          },
+          "locked": {
+            "type": "boolean",
+            "description": "将该位置标记为锁定的标志（即防止车辆使用）。"
+          },
+          "layout": {
+            "type": "object",
+            "description": "有关此位置的图形表示的信息。",
+            "properties": {
+              "position": {
+                "$ref": "#/components/schemas/PlantModelCouple"
+              },
+              "labelOffset": {
+                "$ref": "#/components/schemas/PlantModelCouple"
+              },
+              "locationRepresentation": {
+                "type": "string",
+                "enum": [
+                  "NONE",
+                  "DEFAULT",
+                  "LOAD_TRANSFER_GENERIC",
+                  "LOAD_TRANSFER_ALT_1",
+                  "LOAD_TRANSFER_ALT_2",
+                  "LOAD_TRANSFER_ALT_3",
+                  "LOAD_TRANSFER_ALT_4",
+                  "LOAD_TRANSFER_ALT_5",
+                  "WORKING_GENERIC",
+                  "WORKING_ALT_1",
+                  "WORKING_ALT_2",
+                  "RECHARGE_GENERIC",
+                  "RECHARGE_ALT_1",
+                  "RECHARGE_ALT_2"
+                ]
+              },
+              "layerId": {
+                "type": "integer",
+                "examples": [3]
+              }
+            }
+          },
+          "properties": {
+            "type": "array",
+            "description": "此位置的属性。",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            }
+          }
+        },
+        "required": ["name", "typeName", "position"]
+      },
+      "PlantModelLocationType": {
+        "title": "位置类型",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "此位置类型的名称。",
+            "examples": ["some location type"]
+          },
+          "allowedOperations": {
+            "type": "array",
+            "description": "此位置类型允许的操作。",
+            "items": {
+              "type": "string",
+              "examples": [["some operation", "another operation"]]
+            }
+          },
+          "allowedPeripheralOperations": {
+            "type": "array",
+            "description": "此位置类型允许的外围操作。",
+            "items": {
+              "type": "string",
+              "examples": [
+                ["some peripheral operation", "another peripheral operation"]
+              ]
+            }
+          },
+          "layout": {
+            "type": "object",
+            "description": "有关此位置类型的图形表示的信息。",
+            "properties": {
+              "locationRepresentation": {
+                "type": "string",
+                "enum": [
+                  "NONE",
+                  "DEFAULT",
+                  "LOAD_TRANSFER_GENERIC",
+                  "LOAD_TRANSFER_ALT_1",
+                  "LOAD_TRANSFER_ALT_2",
+                  "LOAD_TRANSFER_ALT_3",
+                  "LOAD_TRANSFER_ALT_4",
+                  "LOAD_TRANSFER_ALT_5",
+                  "WORKING_GENERIC",
+                  "WORKING_ALT_1",
+                  "WORKING_ALT_2",
+                  "RECHARGE_GENERIC",
+                  "RECHARGE_ALT_1",
+                  "RECHARGE_ALT_2"
+                ]
+              }
+            }
+          },
+          "properties": {
+            "type": "object",
+            "description": "此位置类型的属性。",
+            "items": {
+              "type": "object",
+              "properties": {}
+            },
+            "properties": {}
+          }
+        },
+        "required": ["name"]
+      },
+      "PlantModelPath": {
+        "title": "路径",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "此路径的名称。",
+            "examples": ["some path"]
+          },
+          "srcPointName": {
+            "type": "string",
+            "description": "此路径源自的点名称。",
+            "examples": ["some point"]
+          },
+          "destPointName": {
+            "type": "string",
+            "description": "此路径结束的点名称。",
+            "examples": ["another point"]
+          },
+          "length": {
+            "type": "integer",
+            "format": "int64",
+            "description": "此路径的长度（以毫米为单位）。",
+            "examples": [1300]
+          },
+          "maxVelocity": {
+            "type": "integer",
+            "description": "该路径上允许的绝对最大前进速度（mm/s）值为0（默认值）表示不允许在此路径上向前移动。",
+            "examples": [1000]
+          },
+          "maxReverseVelocity": {
+            "type": "integer",
+            "description": "该路径上允许的绝对最大反向速度（mm/s）值为0（默认值）表示不允许在此路径上反向移动。",
+            "examples": [300]
+          },
+          "peripheralOperations": {
+            "type": "array",
+            "description": "当车辆沿着该路径行驶时要执行的外围操作。",
+            "items": {
+              "type": "object",
+              "properties": {
+                "operation": {
+                  "type": "string",
+                  "examples": ["some operation"]
+                },
+                "locationName": {
+                  "type": "string",
+                  "examples": ["some location"]
+                },
+                "executionTrigger": {
+                  "type": "string",
+                  "enum": ["AFTER_ALLOCATION", "AFTER_MOVEMENT"]
+                },
+                "completionRequired": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "locked": {
+            "type": "boolean",
+            "description": "将该路径标记为锁定的标志（即防止车辆使用）。"
+          },
+          "vehicleEnvelopes": {
+            "type": "array",
+            "description": "穿过该路径的车辆可能占用的包络关键点的地图。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelEnvelope"
+            }
+          },
+          "layout": {
+            "type": "object",
+            "description": "关于此路径的图形表示的信息。",
+            "properties": {
+              "connectionType": {
+                "type": "string",
+                "enum": [
+                  "DIRECT",
+                  "ELBOW",
+                  "SLANTED",
+                  "POLYPATH",
+                  "BEZIER",
+                  "BEZIER_3"
+                ]
+              },
+              "controlPoints": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PlantModelCouple"
+                }
+              },
+              "layerId": {
+                "type": "integer",
+                "examples": [3]
+              }
+            }
+          },
+          "properties": {
+            "items": {
+              "type": "object",
+              "properties": {}
+            },
+            "type": "array"
+          }
+        },
+        "required": ["name", "srcPointName", "destPointName"]
+      },
+      "PlantModelPoint": {
+        "title": "点",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "这一点的名称。",
+            "examples": ["some point"]
+          },
+          "position": {
+            "$ref": "#/components/schemas/PlantModelTriple"
+          },
+          "vehicleOrientationAngle": {
+            "oneOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number",
+                "format": "double"
+              }
+            ],
+            "description": "当车辆处于该位置时，车辆（假定）的方位角（-360..360）。如果没有为此点定义方向角，则可以是字符串（“NaN”）",
+            "examples": [73.3]
+          },
+          "type": {
+            "type": "string",
+            "description": "这一点的类型。",
+            "enum": ["REPORT_POSITION", "HALT_POSITION", "PARK_POSITION"]
+          },
+          "vehicleEnvelopes": {
+            "type": "array",
+            "description": "位于该点的车辆可能占用的信封的信封密钥地图。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelEnvelope"
+            }
+          },
+          "layout": {
+            "type": "object",
+            "description": "描述这一点的图形表示。",
+            "properties": {
+              "position": {
+                "$ref": "#/components/schemas/PlantModelCouple"
+              },
+              "labelOffset": {
+                "$ref": "#/components/schemas/PlantModelCouple"
+              },
+              "layerId": {
+                "type": "integer",
+                "examples": [3]
+              }
+            }
+          },
+          "properties": {
+            "type": "array",
+            "description": "此点的属性。",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            }
+          }
+        },
+        "required": ["name"]
+      },
+      "PlantModel": {
+        "title": "工厂型号",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "植物模型的名称。",
+            "examples": ["Plant Model 01"]
+          },
+          "points": {
+            "type": "array",
+            "description": "工厂模型的要点。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelPoint"
+            },
+            "examples": [
+              [
+                {
+                  "name": "Point-A",
+                  "position": {
+                    "x": 15000,
+                    "y": 20000,
+                    "z": 0
+                  },
+                  "vehicleOrientationAngle": 90,
+                  "type": "HALT_POSITION",
+                  "layout": {
+                    "position": {
+                      "x": 15000,
+                      "y": 20000
+                    },
+                    "labelOffset": {
+                      "x": 10,
+                      "y": 10
+                    },
+                    "layerId": 0
+                  },
+                  "properties": [
+                    {
+                      "name": "isExampleProperty",
+                      "value": true
+                    }
+                  ]
+                },
+                {
+                  "name": "Point-B",
+                  "position": {
+                    "x": 30000,
+                    "y": 20000,
+                    "z": 0
+                  },
+                  "vehicleOrientationAngle": 90,
+                  "type": "HALT_POSITION",
+                  "layout": {
+                    "position": {
+                      "x": 30000,
+                      "y": 20000
+                    },
+                    "labelOffset": {
+                      "x": 10,
+                      "y": 10
+                    },
+                    "layerId": 0
+                  },
+                  "properties": [
+                    {
+                      "name": "isExampleProperty",
+                      "value": true
+                    }
+                  ]
+                },
+                {
+                  "name": "Point-C",
+                  "position": {
+                    "x": 10000,
+                    "y": 30000,
+                    "z": 0
+                  },
+                  "vehicleOrientationAngle": "NaN",
+                  "type": "HALT_POSITION",
+                  "layout": {
+                    "position": {
+                      "x": 10000,
+                      "y": 30000
+                    },
+                    "labelOffset": {
+                      "x": 10,
+                      "y": 10
+                    },
+                    "layerId": 0
+                  }
+                },
+                {
+                  "name": "Point-D",
+                  "position": {
+                    "x": 25000,
+                    "y": 30000,
+                    "z": 0
+                  },
+                  "vehicleOrientationAngle": "NaN",
+                  "type": "HALT_POSITION",
+                  "layout": {
+                    "position": {
+                      "x": 25000,
+                      "y": 30000
+                    },
+                    "labelOffset": {
+                      "x": 10,
+                      "y": 10
+                    },
+                    "layerId": 0
+                  }
+                }
+              ]
+            ]
+          },
+          "paths": {
+            "type": "array",
+            "description": "植物模型的路径。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelPath"
+            },
+            "examples": [
+              [
+                {
+                  "name": "Path-AB",
+                  "srcPointName": "Point-A",
+                  "destPointName": "Point-B",
+                  "maxVelocity": 2500,
+                  "maxReverseVelocity": 2500,
+                  "locked": false,
+                  "layout": {
+                    "connectionType": "DIRECT",
+                    "layerId": 0
+                  },
+                  "properties": [
+                    {
+                      "name": "pathPropertyKey",
+                      "value": "exampleValue"
+                    }
+                  ]
+                },
+                {
+                  "name": "Path-BC",
+                  "srcPointName": "Point-B",
+                  "destPointName": "Point-C",
+                  "maxVelocity": 2500,
+                  "maxReverseVelocity": 2500,
+                  "layout": {
+                    "connectionType": "DIRECT",
+                    "layerId": 0
+                  }
+                },
+                {
+                  "name": "Path-CA",
+                  "srcPointName": "Point-C",
+                  "destPointName": "Point-A",
+                  "maxVelocity": 2500,
+                  "maxReverseVelocity": 2500,
+                  "layout": {
+                    "connectionType": "DIRECT",
+                    "layerId": 0
+                  }
+                },
+                {
+                  "name": "Path-CD",
+                  "srcPointName": "Point-C",
+                  "destPointName": "Point-D",
+                  "maxVelocity": 1500,
+                  "maxReverseVelocity": 1000,
+                  "layout": {
+                    "connectionType": "DIRECT",
+                    "layerId": 0
+                  }
+                },
+                {
+                  "name": "Path-DA",
+                  "srcPointName": "Point-D",
+                  "destPointName": "Point-A",
+                  "maxVelocity": 2500,
+                  "maxReverseVelocity": 2500,
+                  "layout": {
+                    "connectionType": "DIRECT",
+                    "layerId": 0
+                  }
+                },
+                {
+                  "name": "Path-DB",
+                  "srcPointName": "Point-D",
+                  "destPointName": "Point-B",
+                  "maxVelocity": 2500,
+                  "maxReverseVelocity": 2500,
+                  "layout": {
+                    "connectionType": "DIRECT",
+                    "layerId": 0
+                  }
+                }
+              ]
+            ]
+          },
+          "locationTypes": {
+            "type": "array",
+            "description": "工厂模型的位置类型。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelLocationType"
+            },
+            "examples": [
+              [
+                {
+                  "name": "Transfer-station",
+                  "allowedOperations": ["Load cargo", "Unload cargo"],
+                  "layout": {
+                    "locationRepresentation": "LOAD_TRANSFER_GENERIC"
+                  },
+                  "properties": [
+                    {
+                      "name": "locationTypePropertyKey",
+                      "value": "locationTypePropertyValue"
+                    }
+                  ]
+                },
+                {
+                  "name": "Working-station",
+                  "allowedOperations": ["Cut", "Drill"],
+                  "layout": {
+                    "locationRepresentation": "WORKING_GENERIC"
+                  }
+                }
+              ]
+            ]
+          },
+          "locations": {
+            "type": "array",
+            "description": "工厂模型的位置。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelLocation"
+            },
+            "examples": [
+              [
+                {
+                  "name": "Storage 01",
+                  "typeName": "Transfer-station",
+                  "position": {
+                    "x": 15000,
+                    "y": 10000,
+                    "z": 0
+                  },
+                  "links": [
+                    {
+                      "pointName": "Point-A"
+                    }
+                  ],
+                  "locked": false,
+                  "layout": {
+                    "position": {
+                      "x": 15000,
+                      "y": 10000
+                    },
+                    "labelOffset": {
+                      "x": 10,
+                      "y": 10
+                    },
+                    "locationRepresentation": "LOAD_TRANSFER_ALT_1",
+                    "layerId": 0
+                  }
+                },
+                {
+                  "name": "Storage 02",
+                  "typeName": "Transfer-station",
+                  "position": {
+                    "x": 30000,
+                    "y": 10000,
+                    "z": 0
+                  },
+                  "links": [
+                    {
+                      "pointName": "Point-B"
+                    }
+                  ],
+                  "locked": false,
+                  "layout": {
+                    "position": {
+                      "x": 30000,
+                      "y": 10000
+                    },
+                    "labelOffset": {
+                      "x": 10,
+                      "y": 10
+                    },
+                    "layerId": 0
+                  }
+                },
+                {
+                  "name": "Workshop",
+                  "typeName": "Working-station",
+                  "position": {
+                    "x": 35000,
+                    "y": 30000,
+                    "z": 0
+                  },
+                  "links": [
+                    {
+                      "pointName": "Point-D"
+                    }
+                  ],
+                  "locked": false,
+                  "layout": {
+                    "position": {
+                      "x": 35000,
+                      "y": 30000
+                    },
+                    "labelOffset": {
+                      "x": 10,
+                      "y": 10
+                    },
+                    "layerId": 0
+                  }
+                },
+                {
+                  "name": "Loading Bay",
+                  "typeName": "Transfer-station",
+                  "position": {
+                    "x": 0,
+                    "y": 30000,
+                    "z": 0
+                  },
+                  "links": [
+                    {
+                      "pointName": "Point-C"
+                    }
+                  ],
+                  "locked": false,
+                  "layout": {
+                    "position": {
+                      "x": 0,
+                      "y": 30000
+                    },
+                    "labelOffset": {
+                      "x": 10,
+                      "y": 10
+                    },
+                    "layerId": 0
+                  }
+                }
+              ]
+            ]
+          },
+          "blocks": {
+            "type": "array",
+            "description": "工厂模型的块。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelBlock"
+            },
+            "examples": [
+              [
+                {
+                  "name": "Block-01",
+                  "type": "SINGLE_VEHICLE_ONLY",
+                  "memberNames": ["Path-BC", "Path-DA"],
+                  "layout": {
+                    "color": "#FF0000"
+                  }
+                }
+              ]
+            ]
+          },
+          "vehicles": {
+            "type": "array",
+            "description": "工厂模型的车辆。",
+            "items": {
+              "$ref": "#/components/schemas/PlantModelVehicle"
+            },
+            "examples": [
+              [
+                {
+                  "name": "Vehicle-01",
+                  "length": 1000,
+                  "energyLevelCritical": 15,
+                  "energyLevelGood": 50,
+                  "energyLevelFullyRecharged": 97,
+                  "energyLevelSufficientlyRecharged": 75,
+                  "maxVelocity": 1500,
+                  "maxReverseVelocity": 750,
+                  "layout": {
+                    "routeColor": "#00FF00"
+                  }
+                },
+                {
+                  "name": "Vehicle-02",
+                  "length": 1000,
+                  "energyLevelCritical": 15,
+                  "energyLevelGood": 50,
+                  "energyLevelFullyRecharged": 97,
+                  "energyLevelSufficientlyRecharged": 75,
+                  "maxVelocity": 1500,
+                  "maxReverseVelocity": 750,
+                  "layout": {
+                    "routeColor": "#550055"
+                  }
+                }
+              ]
+            ]
+          },
+          "visualLayout": {
+            "$ref": "#/components/schemas/PlantModelVisualLayout"
+          },
+          "properties": {
+            "type": "array",
+            "description": "植物模型的属性。",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["name"]
+      },
+      "PeripheralAttachmentInformation": {
+        "title": "附件信息",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "locationReference": {
+            "type": "string",
+            "description": "位置的名称。",
+            "examples": ["Fire door 001"]
+          },
+          "attachedCommAdapter": {
+            "type": "string",
+            "description": "当前连接到此位置的外围驱动程序的描述类名。",
+            "examples": ["org.opentcs.somePeripheral.driver001"]
+          }
+        }
+      },
+      "PeripheralOperation": {
+        "title": "外围设备操作",
+        "description": "要由外围设备执行的一种操作。",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "operation": {
+            "type": "string",
+            "description": "外围设备要执行的操作。",
+            "examples": ["Open door"]
+          },
+          "locationName": {
+            "type": "string",
+            "description": "与外围设备关联的位置的名称。",
+            "examples": ["Loading Bay"]
+          },
+          "executionTrigger": {
+            "type": "string",
+            "description": "要执行此操作的时刻。",
+            "enum": ["AFTER_ALLOCATION", "AFTER_MOVEMENT"],
+            "default": "AFTER_ALLOCATION"
+          },
+          "completionRequired": {
+            "type": "boolean",
+            "description": "是否需要完成此操作才能使车辆继续行驶。",
+            "default": false
+          }
+        },
+        "required": ["operation", "locationName"]
+      },
+      "PeripheralJob": {
+        "title": "外围工作",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "incompleteName": {
+            "type": "boolean",
+            "description": "外围作业的名称是否被认为是不完整的。如果设置了，内核将根据其配置完成名称，例如，通过在名称后面添加后缀。建议设置此项，因为内核生成的名称可以保证是唯一的，而客户端通常无法保证这一点。",
+            "default": false
+          },
+          "reservationToken": {
+            "type": "string",
+            "description": "可用于预订外围设备的令牌。为特定令牌保留的外围设备只能处理与该保留令牌匹配的作业。保留令牌不能为空。"
+          },
+          "relatedVehicle": {
+            "type": "string",
+            "description": "为其创建外围作业的车辆的名称。如果作业不是在车辆处理运输订单的上下文中创建的，则可能为无效的",
+            "default": null
+          },
+          "relatedTransportOrder": {
+            "type": "string",
+            "description": "为其创建外围作业的传输订单的名称。如果作业不是在车辆处理运输订单的上下文中创建的，则可能为无效的",
+            "default": null
+          },
+          "peripheralOperation": {
+            "$ref": "#/components/schemas/PeripheralOperation"
+          },
+          "properties": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2147483647,
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "外围作业的属性。"
+          }
+        },
+        "required": ["reservationToken", "peripheralOperation"]
+      },
+      "PeripheralJobState": {
+        "title": "外围作业状态",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "外围作业的名称。",
+            "examples": ["PJob-01"]
+          },
+          "reservationToken": {
+            "type": "string",
+            "description": "一种令牌，可用于保留外围设备。为特定令牌保留的外围设备只能处理与该保留令牌匹配的作业。",
+            "examples": ["Vehicle-0001"]
+          },
+          "relatedVehicle": {
+            "type": "string",
+            "description": "为其创建外围作业的车辆的名称。如果作业不是在车辆处理运输订单的上下文中创建的，则可能为无效的",
+            "examples": ["Vehicle-0001"]
+          },
+          "relatedTransportOrder": {
+            "type": "string",
+            "description": "为其创建外围作业的传输订单的名称。如果作业不是在车辆处理运输订单的上下文中创建的，则可能为无效的",
+            "examples": ["TOrder-01"]
+          },
+          "peripheralOperation": {
+            "$ref": "#/components/schemas/PeripheralOperation"
+          },
+          "state": {
+            "type": "string",
+            "description": "外围作业的当前状态。",
+            "enum": ["TO_BE_PROCESSED", "BEING_PROCESSED", "FINISHED", "FAILED"]
+          },
+          "creationTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建此外围作业的时间点（根据ISO 8601表示）。",
+            "examples": ["2022-01-01T12:00:00Z"]
+          },
+          "finishedTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "完成此外围作业处理的时间点（根据ISO 8601表示）。",
+            "examples": ["2022-01-01T12:00:00Z"]
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "外围作业的属性。"
+          }
+        },
+        "required": [
+          "name",
+          "reservationToken",
+          "relatedVehicle",
+          "relatedTransportOrder",
+          "peripheralOperation",
+          "state",
+          "creationTime",
+          "finishedTime"
+        ]
+      },
+      "PrecisePosition": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "x": {
+            "type": "integer",
+            "description": "位置的十、坐标",
+            "examples": [60]
+          },
+          "y": {
+            "type": "integer",
+            "description": "位置的Y坐标",
+            "examples": [40]
+          },
+          "z": {
+            "type": "integer",
+            "description": "位置的Z坐标",
+            "examples": [0]
+          }
+        },
+        "required": ["x", "y", "z"]
+      },
+      "Property": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "description": "房产的钥匙",
+            "examples": ["key1"]
+          },
+          "value": {
+            "type": "string",
+            "description": "房产的价值",
+            "examples": ["value1"]
+          }
+        },
+        "required": ["key", "value"]
+      },
+      "PeripheralJobStatusMessage": {
+        "title": "外围工作状态消息",
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StatusMessage"
+          },
+          {
+            "$ref": "#/components/schemas/PeripheralJobState"
+          },
+          {
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["PeripheralJob"],
+                "default": "PeripheralJob"
+              },
+              "sequenceNumber": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        ]
+      },
+      "VehicleStatusMessage": {
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StatusMessage"
+          },
+          {
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["Vehicle"],
+                "default": "Vehicle"
+              },
+              "sequenceNumber": {
+                "type": "string"
+              },
+              "vehicleName": {
+                "type": "string",
+                "description": "车辆名称",
+                "examples": ["Vehicle-0001"]
+              },
+              "transportOrderName": {
+                "type": "string",
+                "description": "车辆当前处理的运输订单的名称",
+                "examples": ["TOrder-0001"]
+              },
+              "position": {
+                "type": "string",
+                "description": "车辆当前占用的点的名称",
+                "examples": ["Point-0001"]
+              },
+              "precisePosition": {
+                "$ref": "#/components/schemas/PrecisePosition"
+              },
+              "paused": {
+                "type": "boolean",
+                "description": "车辆是否已暂停。",
+                "examples": [false]
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "UNKNOWN",
+                  "UNAVAILABLE",
+                  "ERROR",
+                  "IDLE",
+                  "EXECUTING",
+                  "CHARGING"
+                ],
+                "description": "车辆的当前状态"
+              },
+              "procState": {
+                "type": "string",
+                "enum": [
+                  "UNAVAILABLE",
+                  "IDLE",
+                  "AWAITING_ORDER",
+                  "PROCESSING_ORDER"
+                ],
+                "description": "车辆的当前处理状态"
+              },
+              "allocatedResources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceSet"
+                },
+                "description": "车辆已分配的资源。",
+                "examples": [
+                  [
+                    ["Path-0039--0040", "Point-0040"],
+                    ["Path-0040--0041", "Point-0041"]
+                  ]
+                ]
+              },
+              "claimedResources": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ResourceSet"
+                },
+                "description": "为车辆路线申请的资源（即尚未分配的资源）。",
+                "examples": [
+                  [
+                    ["Path-0041--0042", "Point-0042"],
+                    ["Path-0042--0043", "Point-0043", "Location-2345"]
+                  ]
+                ]
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "title": "车辆状态消息",
+        "required": [
+          "type",
+          "vehicleName",
+          "state",
+          "procState",
+          "allocatedResources",
+          "claimedResources"
+        ]
+      },
+      "OrderStatusMessage": {
+        "title": "订单状态消息",
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/StatusMessage"
+          },
+          {
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["TransportOrder"],
+                "default": "TransportOrder"
+              },
+              "sequenceNumber": {
+                "type": "string"
+              },
+              "orderName": {
+                "type": "string",
+                "description": "（可选）运输订单名称",
+                "examples": ["TOrder-0001"]
+              },
+              "processingVehicleName": {
+                "type": "string",
+                "description": "处理车辆的名称",
+                "examples": ["Vehicle-0001"]
+              },
+              "orderState": {
+                "type": "string",
+                "enum": [
+                  "RAW",
+                  "ACTIVE",
+                  "DISPATCHABLE",
+                  "BEING_PROCESSED",
+                  "WITHDRAWN",
+                  "FINISHED",
+                  "FAILED",
+                  "UNROUTABLE"
+                ],
+                "description": "运输订单的当前状态"
+              },
+              "destinations": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 2147483647,
+                "items": {
+                  "$ref": "#/components/schemas/DestinationState"
+                },
+                "description": "运输订单的目的地"
+              },
+              "properties": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Property"
+                },
+                "description": "运输订单的属性"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "required": ["type"]
+      },
+      "StatusMessage": {
+        "title": "抽象状态消息",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["TransportOrder", "Vehicle", "PeripheralJob"]
+          },
+          "sequenceNumber": {
+            "type": "integer",
+            "description": "此状态消息的（唯一）序列号",
+            "examples": [123]
+          },
+          "creationTimeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建此状态消息时",
+            "examples": ["2018-05-14T07:42:00.343Z"]
+          }
+        },
+        "discriminator": {
+          "propertyName": "type"
+        },
+        "required": ["type", "sequenceNumber", "creationTimeStamp"]
+      },
+      "StatusMessageList": {
+        "title": "状态消息列表",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "timeStamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "创建此数据结构的时间点"
+          },
+          "statusMessages": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "$ref": "#/components/schemas/OrderStatusMessage"
+                },
+                {
+                  "$ref": "#/components/schemas/VehicleStatusMessage"
+                },
+                {
+                  "$ref": "#/components/schemas/PeripheralJobStatusMessage"
+                }
+              ]
+            },
+            "description": "状态消息"
+          }
+        },
+        "required": ["timeStamp", "statusMessages"]
+      },
+      "ResourceSet": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "description": "资源的名称"
+        },
+        "examples": [["Point-0042", "Path-0041--0042"]]
+      },
+      "VehicleState": {
+        "title": "车辆状态",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "车辆名称",
+            "examples": ["Vehicle-0001"]
+          },
+          "properties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "与此对象关联的一组属性（键值对）。",
+            "properties": {}
+          },
+          "length": {
+            "type": "integer",
+            "description": "车辆的长度（单位：mm）",
+            "examples": [1000]
+          },
+          "energyLevelGood": {
+            "type": "integer",
+            "description": "车辆能量水平为“良好”的值（%）。",
+            "examples": [90]
+          },
+          "energyLevelCritical": {
+            "type": "integer",
+            "description": "车辆能量水平被视为“临界”的值（%）。",
+            "examples": [30]
+          },
+          "energyLevel": {
+            "type": "integer",
+            "description": "车辆的剩余能量（%）。",
+            "examples": [60]
+          },
+          "integrationLevel": {
+            "type": "string",
+            "enum": [
+              "TO_BE_IGNORED",
+              "TO_BE_NOTICED",
+              "TO_BE_RESPECTED",
+              "TO_BE_UTILIZED"
+            ],
+            "description": "车辆的集成级别。"
+          },
+          "paused": {
+            "type": "boolean",
+            "description": "车辆是否已暂停。",
+            "examples": [false]
+          },
+          "procState": {
+            "type": "string",
+            "enum": [
+              "UNAVAILABLE",
+              "IDLE",
+              "AWAITING_ORDER",
+              "PROCESSING_ORDER"
+            ],
+            "description": "车辆的当前处理状态。"
+          },
+          "transportOrder": {
+            "type": "string",
+            "description": "车辆当前正在处理的运输订单的名称。",
+            "examples": ["TOrder-01"]
+          },
+          "currentPosition": {
+            "type": "string",
+            "description": "车辆当前占用的点的名称。",
+            "examples": ["Point-0001"]
+          },
+          "orientationAngle": {
+            "type": "number"
+          },
+          "precisePosition": {
+            "$ref": "#/components/schemas/PrecisePosition"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "UNKNOWN",
+              "UNAVAILABLE",
+              "ERROR",
+              "IDLE",
+              "EXECUTING",
+              "CHARGING"
+            ],
+            "description": "车辆的当前状态。"
+          },
+          "allocatedResources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceSet"
+            },
+            "description": "车辆已分配的资源。",
+            "examples": [
+              [
+                ["Path-0039--0040", "Point-0040"],
+                ["Path-0040--0041", "Point-0041"]
+              ]
+            ]
+          },
+          "claimedResources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceSet"
+            },
+            "description": "为车辆路线申请的资源（即尚未分配的资源）。",
+            "examples": [
+              [
+                ["Path-0041--0042", "Point-0042"],
+                ["Path-0042--0043", "Point-0043", "Location-2345"]
+              ]
+            ]
+          },
+          "allowedOrderTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "此车辆允许的订单类型。"
+            },
+            "examples": [["OrderType001", "OrderType002"]]
+          },
+          "envelopeKey": {
+            "type": "string",
+            "description": "这辆车的信封钥匙。",
+            "examples": ["envelopeType-01"]
+          }
+        },
+        "required": [
+          "length",
+          "energyLevelGood",
+          "energyLevelCritical",
+          "energyLevel",
+          "allocatedResources",
+          "claimedResources",
+          "orientationAngle"
+        ]
+      },
+      "OrderSequence": {
+        "title": "订单顺序",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "incompleteName": {
+            "type": "boolean",
+            "description": "指示名称是否不完整，是否需要在创建实际订单序列时填写。（具体操作方式由内核决定。）",
+            "examples": [false]
+          },
+          "type": {
+            "type": "string",
+            "description": "订单序列的类型。",
+            "examples": ["Park"]
+          },
+          "intendedVehicle": {
+            "type": "string",
+            "description": "用于处理订单序列的车辆的名称。如果任何车辆都可以自由处理此序列，则此序列为“空”。",
+            "examples": ["Vehicle-01"]
+          },
+          "failureFatal": {
+            "type": "boolean",
+            "description": "指示此序列中一个订单的失败是否会对所有后续订单造成致命影响。",
+            "examples": [false]
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "订单序列的属性"
+          }
+        }
+      },
+      "OrderSequenceState": {
+        "title": "订单序列状态",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "订单序列的名称。",
+            "examples": ["Sequence-001"]
+          },
+          "type": {
+            "type": "string",
+            "description": "订单序列的类型。",
+            "examples": ["Park"]
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "订单序列的订单序列。"
+            },
+            "examples": [["some-order", "another-order", "order-3"]]
+          },
+          "finishedIndex": {
+            "type": "integer",
+            "description": "序列中最后完成的订单的索引-如果还没有完成，则为1.",
+            "examples": [3]
+          },
+          "complete": {
+            "type": "boolean",
+            "description": "指示此订单序列是否完整，并且不会被更多订单扩展。",
+            "examples": [false]
+          },
+          "finished": {
+            "type": "boolean",
+            "description": "指示是否已完全处理此订单序列。",
+            "examples": [false]
+          },
+          "failureFatal": {
+            "type": "boolean",
+            "description": "指示此序列中一个订单的失败是否会对所有后续订单造成致命影响。",
+            "examples": [false]
+          },
+          "intendedVehicle": {
+            "type": "string",
+            "description": "用于处理订单序列的车辆的名称。如果任何车辆都可以自由处理此序列，则此序列为“空”。",
+            "examples": ["Vehicle-0001"]
+          },
+          "processingVehicle": {
+            "type": "string",
+            "description": "处理此订单序列的车辆，如果尚未分配车辆，则为“空”。",
+            "examples": ["Vehicle-0002"]
+          },
+          "properties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "订单序列属性"
+          }
+        }
+      },
+      "AllowedOrderTypes": {
+        "title": "允许的订单类型",
+        "type": "object",
+        "properties": {
+          "orderTypes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "允许的订单类型的名称。"
+            },
+            "examples": [["Park", "Load cargo", "Unload cargo"]]
+          }
+        },
+        "required": ["orderTypes"]
+      },
+      "DestinationOrder": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "locationName": {
+            "type": "string",
+            "description": "目标位置的名称",
+            "examples": ["Storage 01"]
+          },
+          "operation": {
+            "type": "string",
+            "description": "目标操作",
+            "examples": ["Load cargo"]
+          },
+          "properties": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2147483647,
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "驱动器顺序的属性"
+          }
+        },
+        "required": ["locationName", "operation"]
+      },
+      "TransportOrder": {
+        "title": "运输订单",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "incompleteName": {
+            "type": "boolean",
+            "description": "运输订单的名称是否被视为不完整。如果设置了，内核将根据其配置完成名称，例如，通过在名称后面添加后缀。建议设置此项，因为内核生成的名称可以保证是唯一的，而客户端通常无法保证这一点。",
+            "default": false
+          },
+          "dispensable": {
+            "type": "boolean",
+            "description": "此订单是否可有可无（可自动撤销）。",
+            "default": false
+          },
+          "deadline": {
+            "type": "string",
+            "format": "date-time",
+            "description": "运输订单的（可选）截止日期",
+            "examples": ["2018-05-17T06:42:40.396Z"]
+          },
+          "intendedVehicle": {
+            "type": "string",
+            "description": "运输订单的（可选）预定车辆",
+            "examples": ["Vehicle-01"]
+          },
+          "peripheralReservationToken": {
+            "type": "string",
+            "description": "一种（可选）令牌，用于在处理此传输订单时保留外围设备。",
+            "examples": ["Token-001"]
+          },
+          "wrappingSequence": {
+            "type": "string",
+            "description": "此传输订单所属的订单序列。如果此订单不属于任何序列，则可以为无效的",
+            "examples": ["OrderSequence-01"]
+          },
+          "type": {
+            "type": "string",
+            "description": "运输订单的（可选）类型",
+            "examples": ["Park"]
+          },
+          "destinations": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 2147483647,
+            "items": {
+              "$ref": "#/components/schemas/DestinationOrder"
+            },
+            "description": "目的地"
+          },
+          "properties": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2147483647,
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "运输订单的属性"
+          },
+          "dependencies": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2147483647,
+            "items": {
+              "type": "string",
+              "examples": ["TOrder-001"]
+            },
+            "description": "运输订单的依赖项"
+          }
+        },
+        "required": ["destinations"]
+      },
+      "DestinationState": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "locationName": {
+            "type": "string",
+            "description": "目标位置的名称",
+            "examples": ["Storage 01"]
+          },
+          "operation": {
+            "type": "string",
+            "description": "目标操作",
+            "examples": ["Store"]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "PRISTINE",
+              "ACTIVE",
+              "TRAVELLING",
+              "OPERATING",
+              "FINISHED",
+              "FAILED"
+            ],
+            "description": "驱动器订单的状态"
+          },
+          "properties": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2147483647,
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "驱动器顺序的属性"
+          },
+          "route": {
+            "description": "路线",
+            "$ref": "#/components/schemas/Route1"
+          }
+        },
+        "required": ["locationName", "operation", "state", "route"]
+      },
+      "Route1": {
+        "type": "object",
+        "properties": {
+          "costs": {
+            "type": "number",
+            "description": "花费"
+          },
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "pat": {
+                  "$ref": "#/components/schemas/PlantModelPath"
+                },
+                "sourcePoint": {
+                  "$ref": "#/components/schemas/PlantModelPoint"
+                },
+                "destinationPoint": {
+                  "$ref": "#/components/schemas/PlantModelPoint"
+                }
+              },
+              "required": ["pat", "sourcePoint", "destinationPoint"]
+            },
+            "description": "步骤"
+          }
+        },
+        "title": "路线",
+        "required": ["costs", "steps"]
+      },
+      "TransportOrderState": {
+        "title": "运输订单状态",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "dispensable": {
+            "type": "boolean",
+            "description": "此订单是否可有可无（可自动撤销）。",
+            "examples": [false]
+          },
+          "name": {
+            "type": "string",
+            "description": "运输订单的名称。",
+            "examples": ["TOrder-01"]
+          },
+          "type": {
+            "type": "string",
+            "description": "运输订单的类型。",
+            "examples": ["Park"]
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "RAW",
+              "ACTIVE",
+              "DISPATCHABLE",
+              "BEING_PROCESSED",
+              "WITHDRAWN",
+              "FINISHED",
+              "FAILED",
+              "UNROUTABLE"
+            ],
+            "description": "运输订单的当前状态。"
+          },
+          "intendedVehicle": {
+            "type": "string",
+            "description": "用于处理运输订单的车辆的名称。",
+            "examples": ["Vehicle-0001"]
+          },
+          "processingVehicle": {
+            "type": "string",
+            "description": "当前正在处理运输订单的车辆的名称。",
+            "examples": ["Vehicle-0002"]
+          },
+          "peripheralReservationToken": {
+            "type": "string",
+            "description": "一种（可选）令牌，用于在处理此传输订单时保留外围设备。",
+            "examples": ["Token-001"]
+          },
+          "wrappingSequence": {
+            "type": "string",
+            "description": "此传输订单所属的订单序列。如果此订单不属于任何序列，则可以为无效的",
+            "examples": ["OrderSequence-01"]
+          },
+          "destinations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DestinationState"
+            },
+            "description": "运输订单的目的地顺序。"
+          },
+          "properties": {
+            "type": "array",
+            "minItems": 0,
+            "maxItems": 2147483647,
+            "items": {
+              "$ref": "#/components/schemas/Property"
+            },
+            "description": "运输订单的属性"
+          }
+        },
+        "required": ["properties"]
+      },
+      "AttachmentInformation": {
+        "title": "附加信息",
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "vehicleName": {
+            "type": "string",
+            "description": "车辆的名称",
+            "examples": ["Vehicle-0001"]
+          },
+          "availableCommAdapters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "可用于此车辆的驱动程序列表（作为描述类的名称）",
+            "examples": [
+              [
+                "org.opentcs.someVehicle.driver001",
+                "org.opentcs.someVehicle.driver002"
+              ]
+            ]
+          },
+          "attachedCommAdapter": {
+            "type": "string",
+            "description": "当前附加到此车辆的车辆驾驶员的描述类名称",
+            "examples": ["org.opentcs.someVehicle.driver001"]
+          }
+        }
+      }
+    },
+    "securitySchemes": {}
+  },
+  "servers": []
+}

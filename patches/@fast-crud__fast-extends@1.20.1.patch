@@ -1,0 +1,49 @@
+diff --git a/.eslintrc.js b/.eslintrc.js
+deleted file mode 100644
+index cdc461fac9f4f2b5731ed2a05f11d477a2206d40..0000000000000000000000000000000000000000
+diff --git a/.prettierrc b/.prettierrc
+deleted file mode 100644
+index 7944aa9b3a9bc29a36d483181271f68676bf53fd..0000000000000000000000000000000000000000
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index 02ff05ee217bb6c748d7683737e5a6278262e3ae..0000000000000000000000000000000000000000
+diff --git a/index.d.ts b/index.d.ts
+deleted file mode 100644
+index e910bb060c38d6f1e446ef4cb673c85186a229e1..0000000000000000000000000000000000000000
+diff --git a/index.js b/index.js
+deleted file mode 100644
+index d7900e11dfff9acca7d3bfc19a8cfa4408833e19..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index 3c8e8c3a5a700c8428faf43cd1cf5fa3e780f885..11182fe4e93c4b4335dd48069b3243bf2c1589a5 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,17 @@
+   "main": "./dist/fast-extends.umd.js",
+   "module": "./dist/fast-extends.mjs",
+   "types": "./dist/d/index.d.ts",
++  "exports": {
++    ".": {
++      "types": "./dist/d/index.d.ts",
++      "import": "./dist/fast-extends.mjs",
++      "require": "./dist/fast-extends.umd.js"
++    },
++    "./dist/*": "./dist/*"
++  },
++  "files": [
++    "dist"
++  ],
+   "scripts": {
+     "build:all": "npm run build:type && npm run build && npm run copy:index",
+     "build": " npm run tsc && npm run build:umd && npm run build:es",
+diff --git a/stats.html b/stats.html
+deleted file mode 100644
+index 5a99e77304971c97fe884c14f4fd68d3b38d3bbb..0000000000000000000000000000000000000000
+diff --git a/tsconfig.json b/tsconfig.json
+deleted file mode 100644
+index c2f8258371489eccf646b2cc06c8886b5c817681..0000000000000000000000000000000000000000
+diff --git a/vite.config.js b/vite.config.js
+deleted file mode 100644
+index 489083083c91994a229da944e4fc0e03c3d5d6f3..0000000000000000000000000000000000000000
+diff --git a/yarn-error.log b/yarn-error.log
+deleted file mode 100644
+index dc2cd4a933c310de7bb957e435893676aaca9e60..0000000000000000000000000000000000000000

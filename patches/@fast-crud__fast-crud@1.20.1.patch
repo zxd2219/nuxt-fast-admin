@@ -1,0 +1,52 @@
+diff --git a/.eslintrc.js b/.eslintrc.js
+deleted file mode 100644
+index 29a6f3fbeb23c9369b2af3ed52ef6f17bf32750a..0000000000000000000000000000000000000000
+diff --git a/.prettierrc b/.prettierrc
+deleted file mode 100644
+index a4643ee91d31c77ecb19b80c799771e5a3d8f3b5..0000000000000000000000000000000000000000
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index 4814cec48ff482e2411c7d7213c13c0d85d192a5..0000000000000000000000000000000000000000
+diff --git a/index.d.ts b/index.d.ts
+deleted file mode 100644
+index e910bb060c38d6f1e446ef4cb673c85186a229e1..0000000000000000000000000000000000000000
+diff --git a/jest.config.js b/jest.config.js
+deleted file mode 100644
+index b756431947a6aff1afc13529489e8d4564fbd0e6..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index 73218520644b0543b04d5ad9806b114d2eacf453..27cc113afba7e901acfdfbe62848b2e52a5bbd22 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,17 @@
+   "main": "./dist/fast-crud.umd.js",
+   "module": "./dist/fast-crud.mjs",
+   "types": "./dist/d/index.d.ts",
++  "exports": {
++    ".": {
++      "types": "./dist/d/index.d.ts",
++      "import": "./dist/fast-crud.mjs",
++      "require": "./dist/fast-crud.umd.js"
++    },
++    "./dist/*": "./dist/*"
++  },
++  "files": [
++    "dist"
++  ],
+   "scripts": {
+     "tsc": "vue-tsc --noEmit --skipLibCheck",
+     "build": "npm run tsc && vite build && npm run copy-local",
+diff --git a/stats.html b/stats.html
+deleted file mode 100644
+index 3a28a894dcb9aeb26968724beccab35923eb0788..0000000000000000000000000000000000000000
+diff --git a/tsconfig.json b/tsconfig.json
+deleted file mode 100644
+index 36525a4b5955b86ea8c09853ade6810e0b411a0c..0000000000000000000000000000000000000000
+diff --git a/typedoc.json b/typedoc.json
+deleted file mode 100644
+index efa9018a6cb981e6c3b4c876709b7b944bbe6372..0000000000000000000000000000000000000000
+diff --git a/vite.config.js b/vite.config.js
+deleted file mode 100644
+index b356f3f8b85852e0429bbd406984c03ba54ca3dd..0000000000000000000000000000000000000000
+diff --git a/yarn-error.log b/yarn-error.log
+deleted file mode 100644
+index 67b07789e0041c40f8e8d396b911a4ddbf622a50..0000000000000000000000000000000000000000

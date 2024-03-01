@@ -1,0 +1,46 @@
+diff --git a/.eslintrc.js b/.eslintrc.js
+deleted file mode 100644
+index 807c7cd1be8dd17db719b03b5b5d8442f754c0ac..0000000000000000000000000000000000000000
+diff --git a/.prettierrc b/.prettierrc
+deleted file mode 100644
+index a4643ee91d31c77ecb19b80c799771e5a3d8f3b5..0000000000000000000000000000000000000000
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index 129fb548f31439bf8998ece4f6b650096979bba9..0000000000000000000000000000000000000000
+diff --git a/index.d.ts b/index.d.ts
+deleted file mode 100644
+index e910bb060c38d6f1e446ef4cb673c85186a229e1..0000000000000000000000000000000000000000
+diff --git a/index.js b/index.js
+deleted file mode 100644
+index d7900e11dfff9acca7d3bfc19a8cfa4408833e19..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index 1697bb8ca17d62c2a176adddc84e7bb3b755ee58..6d2af03349812d2a1c12d5865e21f3632159e110 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,17 @@
+   "main": "./dist/ui-naive.umd.js",
+   "module": "./dist/ui-naive.mjs",
+   "types": "./dist/d/index.d.ts",
++  "exports": {
++    ".": {
++      "types": "./dist/d/index.d.ts",
++      "import": "./dist/ui-naive.mjs",
++      "require": "./dist/ui-naive.umd.js"
++    },
++    "./dist/*": "./dist/*"
++  },
++  "files": [
++    "dist"
++  ],
+   "scripts": {
+     "tsc": "vue-tsc --noEmit --skipLibCheck",
+     "build": "npm run tsc && vite build",
+diff --git a/stats.html b/stats.html
+deleted file mode 100644
+index f548c685ed4998c87fe32d3da6e69a2ba67eca73..0000000000000000000000000000000000000000
+diff --git a/tsconfig.json b/tsconfig.json
+deleted file mode 100644
+index 37814f0fb539e37a8e2f4f38778cff51d63bfe97..0000000000000000000000000000000000000000
+diff --git a/vite.config.js b/vite.config.js
+deleted file mode 100644
+index c423f25e57a41c1b61b69f8c20feef00184fa34d..0000000000000000000000000000000000000000

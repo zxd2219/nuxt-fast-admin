@@ -1,0 +1,46 @@
+diff --git a/.eslintrc.js b/.eslintrc.js
+deleted file mode 100644
+index 455e3b0b4ed87d9d48cc3d7ae95cfaa6d8ac5574..0000000000000000000000000000000000000000
+diff --git a/.prettierrc b/.prettierrc
+deleted file mode 100644
+index a4643ee91d31c77ecb19b80c799771e5a3d8f3b5..0000000000000000000000000000000000000000
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+deleted file mode 100644
+index 6803014e6f81b3fa5d2ff0129fe2d0917d51b811..0000000000000000000000000000000000000000
+diff --git a/index.d.ts b/index.d.ts
+deleted file mode 100644
+index e910bb060c38d6f1e446ef4cb673c85186a229e1..0000000000000000000000000000000000000000
+diff --git a/index.js b/index.js
+deleted file mode 100644
+index 3bd16e178a03831ae8cbf9578aa6df4b8be5926d..0000000000000000000000000000000000000000
+diff --git a/package.json b/package.json
+index 1ed2d7539cc12828dca6ea95a83c83a04faf6f6e..f0c415677710ebe78f523ae383affc50816fc97f 100644
+--- a/package.json
++++ b/package.json
+@@ -5,6 +5,17 @@
+   "main": "./dist/ui-antdv.umd.js",
+   "module": "./dist/ui-antdv.mjs",
+   "types": "./dist/d/index.d.ts",
++  "exports": {
++    ".": {
++      "types": "./dist/d/index.d.ts",
++      "import": "./dist/ui-antdv.mjs",
++      "require": "./dist/ui-antdv.umd.js"
++    },
++    "./dist/*": "./dist/*"
++  },
++  "files": [
++    "dist"
++  ],
+   "scripts": {
+     "tsc": "vue-tsc --noEmit --skipLibCheck",
+     "build": "npm run tsc && vite build",
+diff --git a/stats.html b/stats.html
+deleted file mode 100644
+index 8e711458879724687ffa9dabc0cf2090d29b27ba..0000000000000000000000000000000000000000
+diff --git a/tsconfig.json b/tsconfig.json
+deleted file mode 100644
+index 37814f0fb539e37a8e2f4f38778cff51d63bfe97..0000000000000000000000000000000000000000
+diff --git a/vite.config.js b/vite.config.js
+deleted file mode 100644
+index f8094cf4cc6155156bf02bb5a10fef914501e0bd..0000000000000000000000000000000000000000
